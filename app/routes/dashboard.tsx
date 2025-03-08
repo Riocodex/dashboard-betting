@@ -25,7 +25,53 @@ export default function Dashboard() {
           </nav>
         </header>
 
-        {/* Content */}
+        {/* Hero Section */}
+        <section className="relative p-6 bg-gradient-to-r from-purple-700 to-purple-500 rounded-lg shadow-lg mx-6 my-4 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold">Win $200,000 with a Free Prediction</h2>
+            <p className="text-gray-200 text-sm max-w-md mt-2">
+              Energetically implement expanded arch channels through visionary methods.
+            </p>
+            <button className="mt-4 bg-white text-purple-600 px-4 py-2 rounded font-semibold">More Details</button>
+          </div>
+          <img src="/hero-image.png" alt="Football players" className="w-48 h-auto" />
+        </section>
+
+        {/* Matches Table */}
+        <section className="p-6">
+          <h3 className="text-xl font-semibold mb-4">Football Leagues</h3>
+          <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-gray-700">
+                  <th className="py-2">League</th>
+                  <th className="py-2">All Matches</th>
+                  <th className="py-2">Live Play</th>
+                  <th className="py-2">Completed</th>
+                  <th className="py-2">Scheduled</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { league: 'La Liga', matches: 29 },
+                  { league: 'Premier League', matches: 52 },
+                  { league: 'Bundesliga', matches: 25 },
+                  { league: 'Serie A', matches: 22 },
+                  { league: 'League 01', matches: 34 },
+                ].map((item, index) => (
+                  <tr key={index} className="border-b border-gray-700">
+                    <td className="py-2">{item.league}</td>
+                    <td className="py-2">{item.matches}</td>
+                    <td className="py-2 text-green-400">Live</td>
+                    <td className="py-2 text-gray-400">0</td>
+                    <td className="py-2 text-gray-400">0</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <section className="p-6 flex-1 overflow-auto">
           <Outlet />
         </section>
