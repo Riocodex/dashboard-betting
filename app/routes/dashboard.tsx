@@ -1,4 +1,15 @@
-import { Outlet } from "@remix-run/react";
+import { Outlet,useLoaderData } from "@remix-run/react";
+import { LoaderFunction } from "@remix-run/node";
+import axios from "axios"
+
+const API_URL = "http://localhost:1337/api"
+
+export const loader: LoaderFunction = async()=>{
+    const [ matchesRes, leaguesRes ] = await Promise.all([
+        axios.get(`${API_URL}/matches?populate=home_team,away_team`),
+        axios.get(`${API_URL}/leagues`)
+    ]);
+}
 
 export default function Dashboard() {
   return (
