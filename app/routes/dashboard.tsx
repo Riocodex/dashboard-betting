@@ -3,13 +3,32 @@ import { LoaderFunction } from "@remix-run/node";
 import axios from "axios"
 
 const API_URL = "http://localhost:1337/api"
-
-export const loader: LoaderFunction = async()=>{
-    const [ matchesRes, leaguesRes ] = await Promise.all([
+export const loader: LoaderFunction = async () => {
+    try {
+      const [matchesRes, leaguesRes] = await Promise.all([
         axios.get(`${API_URL}/matches?populate=home_team,away_team`),
         axios.get(`${API_URL}/leagues`)
-    ]);
-}
+      ]);
+  
+      console.log("Matches API Response:", matchesRes.data);
+      console.log("Leagues API Response:", leaguesRes.data);
+  
+      return new Response(
+        JSON.stringify({
+          matches: matchesRes.data.data || [],
+          leagues: leaguesRes.data.data || []
+        }),
+        { headers: { "Content-Type": "application/json" } }
+      );
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return new Response(JSON.stringify({ matches: [], leagues: [] }), {
+        headers: { "Content-Type": "application/json" },
+        status: 500
+      });
+    }
+  };
+  
 
 export default function Dashboard() {
   return (
